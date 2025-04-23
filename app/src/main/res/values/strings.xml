@@ -1,5 +1,18 @@
 <resources>
-    <string name="app_name">hotelbooking-android</string>
+    <string name="app_name">Hotel booking</string>
     <string name="bookings_title">Bookings</string>
     <string name="users_title">Users</string>
+    <string name="title_activity_user_add_floating_button">UserAddFloatingButton</string>
+    <string name="add_user_button">Create user</string>
+    <string name="add_user_dialog_title">Add user</string>
+    <string name="add_user_name_label">Full name</string>
+    <string name="add_user_email_label">Email</string>
+    <string name="close_dialog_button">Cancel</string>
+    <string name="submit_dialog_button">Submit</string>
+    <string name="add_user_dialog_submit">Add user</string>
+    <string name="add_user_name_placeholder">John Doe</string>
+    <string name="add_user_email_placeholder">john.doe@mail.com</string>
+    <string name="no_users_warning">Seems there is no users registered</string>
+    <string name="getting_users_error">An error happened when getting the users</string>
+    <string name="getting_users">Getting users…</string>
 </resources>

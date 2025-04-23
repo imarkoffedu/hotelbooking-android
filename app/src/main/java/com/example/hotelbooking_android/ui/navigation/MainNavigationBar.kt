@@ -7,8 +7,10 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 
@@ -16,16 +18,14 @@ import androidx.navigation.NavHostController
 fun MainNavigationBar(
     navController: NavHostController,
 ) {
-    val selectedNavigationIndex = rememberSaveable {
-        mutableIntStateOf(0)
-    }
+    var selectedNavigation by remember { mutableStateOf(Screen.Users.route) }
 
     NavigationBar {
         navigationItems.forEachIndexed { index, item ->
             NavigationBarItem(
-                selected = selectedNavigationIndex.intValue == index,
+                selected = selectedNavigation == item.route,
                 onClick = {
-                    selectedNavigationIndex.intValue = index
+                    selectedNavigation = item.route
                     navController.navigate(item.route)
                 },
                 icon = {

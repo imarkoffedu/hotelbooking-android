@@ -7,6 +7,9 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.resources.get
 import io.ktor.client.plugins.resources.post
+import io.ktor.client.request.setBody
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
 
 class UserApiClient(private val client: HttpClient) {
 
@@ -28,8 +31,11 @@ class UserApiClient(private val client: HttpClient) {
 
     suspend fun createUser(userForm: UserFormDto): UserDto {
         val response = client.post(
-            UsersApi.CreateUser(userForm = userForm)
-        )
+            UsersApi.CreateUser()
+        ) {
+            contentType(ContentType.Application.Json)
+            setBody(userForm)
+        }
         return response.body()
     }
 }
