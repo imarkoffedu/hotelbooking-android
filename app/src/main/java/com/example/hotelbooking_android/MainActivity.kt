@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.example.hotelbooking_android.core.di.bookingModule
 import com.example.hotelbooking_android.core.di.networkModule
 import com.example.hotelbooking_android.core.di.userModule
 import com.example.hotelbooking_android.presentation.main.MainScreen
@@ -17,7 +18,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         startKoin {
             androidContext(this@MainActivity)
-            modules(networkModule, userModule)
+            modules(networkModule, bookingModule, userModule)
         }
         setContent {
             HotelbookingandroidTheme {

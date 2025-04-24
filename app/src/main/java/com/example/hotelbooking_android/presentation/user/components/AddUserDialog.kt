@@ -10,8 +10,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import com.example.hotelbooking_android.R
 import com.example.hotelbooking_android.domain.model.UserForm
-import com.example.hotelbooking_android.presentation.components.DialogSubmitter
-import com.example.hotelbooking_android.presentation.components.MinimalDialog
+import com.example.hotelbooking_android.presentation.common.components.DialogSubmitter
+import com.example.hotelbooking_android.presentation.common.components.MinimalDialog
 
 @Composable
 fun AddUserDialog(

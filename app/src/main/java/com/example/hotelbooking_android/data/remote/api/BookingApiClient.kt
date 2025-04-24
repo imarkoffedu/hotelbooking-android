@@ -6,6 +6,7 @@ import com.example.hotelbooking_android.data.remote.dto.BookingFormDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.resources.*
+import io.ktor.client.request.setBody
 
 class BookingApiClient(private val client: HttpClient) {
 
@@ -19,33 +20,34 @@ class BookingApiClient(private val client: HttpClient) {
     suspend fun getBookingById(id: String): BookingDto {
         val response = client.get(
             BookingsApi.Booking.Get(
-                BookingsApi.Booking(id)
+                BookingsApi.Booking(id = id)
             )
         )
         return response.body()
     }
 
     suspend fun createBooking(bookingForm: BookingFormDto): BookingDto {
-        val response = client.post(
-            BookingsApi.CreateBooking(bookingForm = bookingForm)
-        )
+        val response = client.post(BookingsApi.CreateBooking()) {
+            setBody(bookingForm)
+        }
         return response.body()
     }
 
     suspend fun updateBooking(id: String, bookingForm: BookingFormDto): BookingDto {
         val response = client.put(
             BookingsApi.Booking.Update(
-                BookingsApi.Booking(id),
-                bookingForm
+                BookingsApi.Booking(id = id)
             )
-        )
+        ) {
+            setBody(bookingForm)
+        }
         return response.body()
     }
 
     suspend fun deleteBooking(id: String) {
         client.delete(
             BookingsApi.Booking.Delete(
-                BookingsApi.Booking(id)
+                BookingsApi.Booking(id = id)
             )
         )
     }

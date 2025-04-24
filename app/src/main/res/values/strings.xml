@@ -15,4 +15,11 @@
     <string name="no_users_warning">Seems there is no users registered</string>
     <string name="getting_users_error">An error happened when getting the users</string>
     <string name="getting_users">Getting users…</string>
+    <string name="getting_bookings">Getting bookings…</string>
+    <string name="getting_bookings_error">An error occurred when getting bookings.</string>
+    <string name="no_bookings_warning">Seems the hotel has no any booked rooms.</string>
+    <string name="create_booking_dialog_title">Create a new booking</string>
+    <string name="create_booking_button">Create booking</string>
+    <string name="edit_boking_dialog_title">Edit booking data</string>
+    <string name="edit_booking_button">Edit booking</string>
 </resources>

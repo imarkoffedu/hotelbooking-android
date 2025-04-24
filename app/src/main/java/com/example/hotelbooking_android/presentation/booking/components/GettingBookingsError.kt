@@ -1,16 +1,17 @@
-package com.example.hotelbooking_android.presentation.user.components
+package com.example.hotelbooking_android.presentation.booking.components
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.example.hotelbooking_android.R
 import com.example.hotelbooking_android.presentation.common.components.EmptyScreenWarning
 
 @Composable
-fun NoUsersWarning() {
+fun GettingBookingsError(error: String?) {
     EmptyScreenWarning(
-        imageVector = Icons.Default.AccountCircle,
-        title = stringResource(R.string.no_users_warning)
+        imageVector = Icons.Default.Close,
+        title = stringResource(R.string.getting_bookings_error),
+        contentDescription = error
     )
 }

@@ -21,6 +21,7 @@ import com.example.hotelbooking_android.presentation.user.components.UsersLazyCo
 
 @Composable
 fun UserScreen() {
+
     val viewModel: UserViewModel = koinViewModel()
 
     var showAddUserDialog by remember { mutableStateOf(false) }
@@ -30,22 +31,20 @@ fun UserScreen() {
     }
 
     Scaffold(
-        topBar = {
-            UserTopBar()
-        },
-        bottomBar = {
-            UserAddFloatingButton(
-                onClick = { showAddUserDialog = true }
-            )
-        },
+        topBar = { UserTopBar() },
+        bottomBar = { UserAddFloatingButton( onClick = { showAddUserDialog = true } ) },
     ) { paddingValues ->
+
         Column(
             modifier = Modifier.padding(paddingValues)
         ) {
-            if (viewModel.isLoading) { GettingUsersIndicator() }
-            else if (viewModel.errorMessage != null) { GettingUsersError(viewModel.errorMessage) }
-            else if (viewModel.users.isEmpty()) { NoUsersWarning() }
-            else { UsersLazyColumn(viewModel.users) }
+
+            when {
+                viewModel.isLoading -> GettingUsersIndicator()
+                viewModel.errorMessage != null -> GettingUsersError(viewModel.errorMessage)
+                viewModel.users.isEmpty() -> NoUsersWarning()
+                else -> UsersLazyColumn(viewModel.users)
+            }
         }
     }
 

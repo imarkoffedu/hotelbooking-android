@@ -1,4 +1,4 @@
-package com.example.hotelbooking_android.presentation.components
+package com.example.hotelbooking_android.presentation.common.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column

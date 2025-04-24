@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.hotelbooking_android.presentation.booking.BookingScreen
 import com.example.hotelbooking_android.presentation.user.UserScreen
 
 @Composable
@@ -24,7 +25,7 @@ fun AppNavHost(
             UserScreen()
         }
         composable(Screen.Bookings.route) {
-            // BookingsScreen() // Uncomment and implement this screen
+             BookingScreen()
         }
     }
 }

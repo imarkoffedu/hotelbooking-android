@@ -5,7 +5,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.example.hotelbooking_android.R
-import com.example.hotelbooking_android.presentation.components.EmptyScreenWarning
+import com.example.hotelbooking_android.presentation.common.components.EmptyScreenWarning
 
 @Composable
 fun GettingUsersError(

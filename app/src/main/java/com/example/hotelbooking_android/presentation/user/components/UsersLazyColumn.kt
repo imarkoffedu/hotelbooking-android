@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.hotelbooking_android.domain.model.User
-import com.example.hotelbooking_android.presentation.components.UserCard
+import com.example.hotelbooking_android.presentation.common.components.UserCard
 
 @Composable
 fun UsersLazyColumn(
