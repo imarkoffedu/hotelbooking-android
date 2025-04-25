@@ -7,6 +7,8 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.resources.*
 import io.ktor.client.request.setBody
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
 
 class BookingApiClient(private val client: HttpClient) {
 
@@ -28,6 +30,7 @@ class BookingApiClient(private val client: HttpClient) {
 
     suspend fun createBooking(bookingForm: BookingFormDto): BookingDto {
         val response = client.post(BookingsApi.CreateBooking()) {
+            contentType(ContentType.Application.Json)
             setBody(bookingForm)
         }
         return response.body()
@@ -39,6 +42,7 @@ class BookingApiClient(private val client: HttpClient) {
                 BookingsApi.Booking(id = id)
             )
         ) {
+            contentType(ContentType.Application.Json)
             setBody(bookingForm)
         }
         return response.body()

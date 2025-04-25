@@ -5,7 +5,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.example.hotelbooking_android.R
-import com.example.hotelbooking_android.presentation.common.components.EmptyScreenWarning
+import com.example.hotelbooking_android.presentation.common.components.screenStates.EmptyScreenWarning
 
 @Composable
 fun NoBookingsWarning() {

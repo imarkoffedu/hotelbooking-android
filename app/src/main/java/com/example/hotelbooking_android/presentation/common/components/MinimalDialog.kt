@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -53,16 +54,15 @@ fun MinimalDialog(
         onDismissRequest = onDismissRequest
     ) {
         Card(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+            modifier = modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp)
         ) {
             Column(
                 modifier = Modifier
                     .padding(8.dp)
                     .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 MinimalDialogTitle(title)
 
@@ -99,7 +99,7 @@ fun MinimalDialogTitle(
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(top = 8.dp)
         )
     }
 }

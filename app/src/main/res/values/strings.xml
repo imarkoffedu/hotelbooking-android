@@ -22,4 +22,21 @@
     <string name="create_booking_button">Create booking</string>
     <string name="edit_boking_dialog_title">Edit booking data</string>
     <string name="edit_booking_button">Edit booking</string>
+    <string name="booking_start_date">Start date:</string>
+    <string name="booking_end_date">End date:</string>
+    <string name="booking_room_number">Room number:</string>
+    <string name="booking_booker">Booker:</string>
+    <string name="add_booking_user_label">User</string>
+    <string name="select_date">Select date</string>
+    <string name="add_booking_start_date">Start date</string>
+    <string name="add_booking_end_date">End date</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_choose_user_with_name">"Choose "</string>
+    <string name="choose_user_button">Choose user</string>
+    <string name="user_label">User</string>
+    <string name="add_booking_room_number">Room number</string>
+    <string name="clear_user_field_button">Clear user</string>
+    <string name="no_user_selected_placeholder">No user selected</string>
+    <string name="choose_user_dialog_title">Choose a user</string>
 </resources>

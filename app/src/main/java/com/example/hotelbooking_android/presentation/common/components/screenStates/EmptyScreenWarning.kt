@@ -1,4 +1,4 @@
-package com.example.hotelbooking_android.presentation.common.components
+package com.example.hotelbooking_android.presentation.common.components.screenStates
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

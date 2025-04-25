@@ -11,13 +11,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.example.hotelbooking_android.presentation.user.components.AddUserDialog
-import com.example.hotelbooking_android.presentation.user.components.GettingUsersError
-import com.example.hotelbooking_android.presentation.user.components.GettingUsersIndicator
-import com.example.hotelbooking_android.presentation.user.components.NoUsersWarning
 import com.example.hotelbooking_android.presentation.user.components.UserAddFloatingButton
+import com.example.hotelbooking_android.presentation.user.components.UserContentStateHandler
 import com.example.hotelbooking_android.presentation.user.components.UserTopBar
-import com.example.hotelbooking_android.presentation.user.components.UsersLazyColumn
 
 @Composable
 fun UserScreen() {
@@ -36,15 +34,9 @@ fun UserScreen() {
     ) { paddingValues ->
 
         Column(
-            modifier = Modifier.padding(paddingValues)
+            Modifier.padding(horizontal = 8.dp)
         ) {
-
-            when {
-                viewModel.isLoading -> GettingUsersIndicator()
-                viewModel.errorMessage != null -> GettingUsersError(viewModel.errorMessage)
-                viewModel.users.isEmpty() -> NoUsersWarning()
-                else -> UsersLazyColumn(viewModel.users)
-            }
+            UserContentStateHandler(viewModel, paddingValues)
         }
     }
 

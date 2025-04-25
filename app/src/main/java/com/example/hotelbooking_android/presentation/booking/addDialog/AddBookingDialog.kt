@@ -1,5 +1,7 @@
-package com.example.hotelbooking_android.presentation.booking.components
+package com.example.hotelbooking_android.presentation.booking.addDialog
 
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,13 +9,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import com.example.hotelbooking_android.R
-import com.example.hotelbooking_android.data.remote.dto.type.BookingStatus
 import com.example.hotelbooking_android.domain.model.Booking
 import com.example.hotelbooking_android.domain.model.BookingForm
-import com.example.hotelbooking_android.domain.model.User
 import com.example.hotelbooking_android.presentation.common.components.DialogSubmitter
 import com.example.hotelbooking_android.presentation.common.components.MinimalDialog
-import java.time.LocalDate
+import com.example.hotelbooking_android.presentation.common.components.datePicker.OutlinedDateField
+import com.example.hotelbooking_android.presentation.user.chooser.UserChooserField
 
 @Composable
 fun AddBookingDialog(
@@ -39,6 +40,7 @@ fun AddBookingDialog(
                     bookingStatus = bookingStatus
                 ))
             }
+            isSubmitting = false
         }
     }
 
@@ -55,27 +57,26 @@ fun AddBookingDialog(
             isLoading = isSubmitting
         )
     ) {
-    }
-}
-
-private data class BookingFormState(
-    val user: User? = null,
-    val roomNumber: Int? = null,
-    val startDate: LocalDate? = null,
-    val endDate: LocalDate? = null,
-    val bookingStatus: BookingStatus = BookingStatus.CONFIRMED
-) {
-    fun validate() = listOf(user, roomNumber, startDate, endDate).all { it != null }
-
-    companion object {
-        fun fromBooking(booking: Booking?) = booking?.let {
-            BookingFormState(
-                user = null,
-                roomNumber = it.roomNumber,
-                startDate = it.startDate,
-                endDate = it.endDate,
-                bookingStatus = it.bookingStatus
-            )
-        } ?: BookingFormState()
+        UserChooserField(
+            value = formState.user,
+            onValueChange = { formState = formState.updateUser(it) }
+        )
+        OutlinedTextField(
+            value = formState.roomNumber?.toString() ?: "",
+            onValueChange = {
+                formState = formState.updateRoomNumber(it.toIntOrNull())
+            },
+            label = { Text(stringResource(R.string.add_booking_room_number)) }
+        )
+        OutlinedDateField(
+            value = formState.startDate,
+            onValueChange = { formState = formState.updateStartDate(it) },
+            label = { Text(stringResource(R.string.add_booking_start_date)) }
+        )
+        OutlinedDateField(
+            value = formState.endDate,
+            onValueChange = { formState = formState.updateEndDate(it) },
+            label = { Text(stringResource(R.string.add_booking_end_date)) }
+        )
     }
 }

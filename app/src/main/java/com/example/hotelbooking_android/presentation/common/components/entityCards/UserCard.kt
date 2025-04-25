@@ -1,7 +1,8 @@
-package com.example.hotelbooking_android.presentation.common.components
+package com.example.hotelbooking_android.presentation.common.components.entityCards
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -15,16 +16,22 @@ import com.example.hotelbooking_android.domain.model.User
 fun UserCard(
     modifier: Modifier = Modifier,
     user: User,
-    onClick: (() -> Unit)? = null,
+    onClick: ((User) -> Unit)? = null,
     isSelected: Boolean = false,
 ) {
+    fun click() {
+        if (onClick != null) {
+            onClick(user)
+        }
+    }
+
     Card(
-        onClick = onClick ?: {},
+        onClick = ::click,
         border = BorderStroke(
             width = if (isSelected) 2.dp else 0.dp,
             color = MaterialTheme.colorScheme.primary
         ),
-        modifier = modifier
+        modifier = modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(16.dp)

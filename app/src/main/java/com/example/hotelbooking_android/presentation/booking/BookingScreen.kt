@@ -11,14 +11,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.example.hotelbooking_android.R
 import com.example.hotelbooking_android.domain.model.Booking
-import com.example.hotelbooking_android.presentation.booking.components.AddBookingDialog
+import com.example.hotelbooking_android.domain.model.BookingForm
+import com.example.hotelbooking_android.presentation.booking.addDialog.AddBookingDialog
 import com.example.hotelbooking_android.presentation.booking.components.BookingAddFloatingButton
-import com.example.hotelbooking_android.presentation.booking.components.BookingsLazyColumn
-import com.example.hotelbooking_android.presentation.booking.components.GettingBookingsError
-import com.example.hotelbooking_android.presentation.booking.components.GettingBookingsIndicator
-import com.example.hotelbooking_android.presentation.booking.components.NoBookingsWarning
+import com.example.hotelbooking_android.presentation.booking.components.BookingContentStateHandler
 import com.example.hotelbooking_android.presentation.common.components.ScreenTopBar
 import org.koin.androidx.compose.koinViewModel
 
@@ -42,21 +41,18 @@ fun BookingScreen() {
         isAddModalOpened = false
     }
 
+    fun createBooking(bookingForm: BookingForm) {
+        viewModel.createBooking(bookingForm)
+        closeAddBookingModal()
+    }
+
     Scaffold(
         topBar = { ScreenTopBar(stringResource(R.string.bookings_title)) },
         bottomBar = { BookingAddFloatingButton(onClick = ::openAddBookingModal) }
     ) { paddingValues ->
 
-        Column(
-            modifier = Modifier.padding(paddingValues)
-        ) {
-
-            when {
-                viewModel.isLoading -> GettingBookingsIndicator()
-                viewModel.errorMessage != null -> GettingBookingsError(viewModel.errorMessage)
-                viewModel.bookings.isEmpty() -> NoBookingsWarning()
-                else -> BookingsLazyColumn(viewModel.bookings)
-            }
+        Column(Modifier.padding(horizontal = 8.dp)) {
+            BookingContentStateHandler(viewModel, contentPadding = paddingValues)
         }
     }
 
@@ -64,7 +60,7 @@ fun BookingScreen() {
         AddBookingDialog(
             booking = selectedBooking,
             onDismiss = ::closeAddBookingModal,
-            onSubmit = { /* TODO */ }
+            onSubmit = ::createBooking
         )
     }
 }

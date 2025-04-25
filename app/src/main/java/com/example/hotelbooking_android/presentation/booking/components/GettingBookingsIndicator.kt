@@ -3,7 +3,7 @@ package com.example.hotelbooking_android.presentation.booking.components
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.example.hotelbooking_android.R
-import com.example.hotelbooking_android.presentation.common.components.LoadingScreenIndicator
+import com.example.hotelbooking_android.presentation.common.components.screenStates.LoadingScreenIndicator
 
 @Composable
 fun GettingBookingsIndicator() {
