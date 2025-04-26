@@ -21,15 +21,11 @@ fun AddUserDialog(
     var formState by remember {
         mutableStateOf(UserFormState())
     }
-    var isSubmitting by remember { mutableStateOf(false) }
 
     fun validate() = formState.name.isNotBlank() && formState.email.isNotBlank()
 
     fun submit() {
-        if (isSubmitting) return
-
         if (validate()) {
-            isSubmitting = true
             onSubmit(UserForm(formState.name, formState.email))
             onDismiss()
         } else {
@@ -44,8 +40,7 @@ fun AddUserDialog(
         onDismissRequest = onDismiss,
         dialogSubmitter = DialogSubmitter(
             onSubmit = ::submit,
-            onSubmitText = stringResource(R.string.add_user_dialog_submit),
-            isLoading = isSubmitting
+            onSubmitText = stringResource(R.string.add_user_dialog_submit)
         ),
         title = stringResource(R.string.add_user_dialog_title)
     ) {

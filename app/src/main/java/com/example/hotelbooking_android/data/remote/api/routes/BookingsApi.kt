@@ -13,13 +13,13 @@ class BookingsApi {
 
     @Resource("{id}")
     class Booking(val parent: BookingsApi = BookingsApi(), val id: String) {
-        @Resource("/")
+        @Resource("")
         class Get(val parent: Booking)
 
-        @Resource("/")
+        @Resource("")
         class Update(val parent: Booking)
 
-        @Resource("/")
+        @Resource("")
         class Delete(val parent: Booking)
     }
 

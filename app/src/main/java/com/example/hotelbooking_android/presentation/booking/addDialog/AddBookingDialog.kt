@@ -15,33 +15,34 @@ import com.example.hotelbooking_android.presentation.common.components.DialogSub
 import com.example.hotelbooking_android.presentation.common.components.MinimalDialog
 import com.example.hotelbooking_android.presentation.common.components.datePicker.OutlinedDateField
 import com.example.hotelbooking_android.presentation.user.chooser.UserChooserField
+import java.util.UUID
 
 @Composable
 fun AddBookingDialog(
     booking: Booking? = null,
     onDismiss: () -> Unit,
-    onSubmit: (BookingForm) -> Unit
+    onCreate: suspend (BookingForm) -> Unit,
+    onUpdate: suspend (UUID, BookingForm) -> Unit
 ) {
     var formState by remember { mutableStateOf(
         BookingFormState.fromBooking(booking)
     ) }
 
-    var isSubmitting by remember { mutableStateOf(false) }
+    suspend fun submit() {
+        if (!formState.validate()) return
 
-    fun submit() {
-        if (formState.validate()) {
-            isSubmitting = true
-            with (formState) {
-                onSubmit(BookingForm(
-                    userId = user!!.id,
-                    roomNumber = roomNumber!!,
-                    startDate = startDate!!,
-                    endDate = endDate!!,
-                    bookingStatus = bookingStatus
-                ))
-            }
-            isSubmitting = false
+        val submittedForm = with (formState) {
+             BookingForm(
+                userId = user!!.id,
+                roomNumber = roomNumber!!,
+                startDate = startDate!!,
+                endDate = endDate!!,
+                bookingStatus = bookingStatus
+            )
         }
+
+        if (booking != null) onUpdate(booking.id, submittedForm)
+        else onCreate(submittedForm)
     }
 
     MinimalDialog(
@@ -53,8 +54,7 @@ fun AddBookingDialog(
             onSubmit = ::submit,
             onSubmitText =
                 if (booking != null) stringResource(R.string.edit_booking_button)
-                else stringResource(R.string.create_booking_button),
-            isLoading = isSubmitting
+                else stringResource(R.string.create_booking_button)
         )
     ) {
         UserChooserField(

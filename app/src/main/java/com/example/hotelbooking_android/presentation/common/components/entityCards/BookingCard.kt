@@ -20,10 +20,16 @@ import com.example.hotelbooking_android.domain.model.Booking
 fun BookingCard(
     modifier: Modifier = Modifier,
     booking: Booking,
-    onClick: (() -> Unit)? = null
+    onClick: ((Booking) -> Unit)? = null
 ) {
+    fun handleClick() {
+        if (onClick != null) {
+            onClick(booking)
+        }
+    }
+
     Card(
-        onClick = onClick ?: {},
+        onClick = ::handleClick,
         modifier = modifier
             .fillMaxWidth()
     ) {

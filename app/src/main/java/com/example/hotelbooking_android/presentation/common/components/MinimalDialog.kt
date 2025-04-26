@@ -12,10 +12,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -23,11 +19,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.hotelbooking_android.R
+import com.example.hotelbooking_android.presentation.common.hooks.useStateHandler
 
-class DialogSubmitter(
-    val onSubmit: () -> Unit,
-    val onSubmitText: String? = null,
-    val isLoading: Boolean = false
+data class DialogSubmitter(
+    val onSubmit: suspend () -> Unit,
+    val onSubmitText: String? = null
 )
 
 @Composable
@@ -38,17 +34,8 @@ fun MinimalDialog(
     title: String? = null,
     content: @Composable () -> Unit
 ) {
-
-    var errorMessage by remember { mutableStateOf("") }
-
-    fun submit() {
-        try {
-            dialogSubmitter?.onSubmit?.invoke()
-        }
-        catch (e: Exception) {
-            errorMessage = e.message ?: "An error occurred"
-        }
-    }
+    // React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render.
+    val (isLoading, errorMessage, submit) = useStateHandler(onSubmit = dialogSubmitter?.onSubmit)
 
     Dialog(
         onDismissRequest = onDismissRequest
@@ -69,7 +56,7 @@ fun MinimalDialog(
                 content()
 
                 if (errorMessage.isNotEmpty()) {
-                    ErrorMessage(errorMessage)
+                    ErrorMessage(errorMessage = errorMessage)
                 }
 
                 Row (
@@ -80,7 +67,11 @@ fun MinimalDialog(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         CancellationButton(onDismissRequest)
-                        SubmitterButton(dialogSubmitter, ::submit)
+                        SubmitterButton(
+                            onSubmit = submit,
+                            onSubmitText = dialogSubmitter?.onSubmitText,
+                            isLoading = isLoading
+                        )
                     }
                 }
             }
@@ -131,23 +122,20 @@ fun ErrorMessage(
 
 @Composable
 fun SubmitterButton(
-    dialogSubmitter: DialogSubmitter?,
-    onSubmit: () -> Unit
+    onSubmit: () -> Unit,
+    onSubmitText: String? = null,
+    isLoading: Boolean
 ) {
-    if (dialogSubmitter != null) {
-        TextButton(
-            onClick = onSubmit,
-            enabled = !dialogSubmitter.isLoading,
-            modifier = Modifier
-        ) {
-            Text(
-                text = dialogSubmitter.onSubmitText
-                    ?: stringResource(R.string.submit_dialog_button)
-            )
+    TextButton(
+        onClick = onSubmit,
+        enabled = !isLoading,
+        modifier = Modifier
+    ) {
+        Text(
+            text = onSubmitText
+                ?: stringResource(R.string.submit_dialog_button)
+        )
 
-            if (dialogSubmitter.isLoading) {
-                CircularProgressIndicator()
-            }
-        }
+        if (isLoading) CircularProgressIndicator()
     }
 }

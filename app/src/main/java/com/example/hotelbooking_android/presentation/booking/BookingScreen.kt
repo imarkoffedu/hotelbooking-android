@@ -20,6 +20,7 @@ import com.example.hotelbooking_android.presentation.booking.components.BookingA
 import com.example.hotelbooking_android.presentation.booking.components.BookingContentStateHandler
 import com.example.hotelbooking_android.presentation.common.components.ScreenTopBar
 import org.koin.androidx.compose.koinViewModel
+import java.util.UUID
 
 @Composable
 fun BookingScreen() {
@@ -41,8 +42,13 @@ fun BookingScreen() {
         isAddModalOpened = false
     }
 
-    fun createBooking(bookingForm: BookingForm) {
+    suspend fun createBooking(bookingForm: BookingForm) {
         viewModel.createBooking(bookingForm)
+        closeAddBookingModal()
+    }
+
+    suspend fun updateBooking(id: UUID, bookingForm: BookingForm) {
+        viewModel.updateBooking(id, bookingForm)
         closeAddBookingModal()
     }
 
@@ -52,7 +58,11 @@ fun BookingScreen() {
     ) { paddingValues ->
 
         Column(Modifier.padding(horizontal = 8.dp)) {
-            BookingContentStateHandler(viewModel, contentPadding = paddingValues)
+            BookingContentStateHandler(
+                viewModel = viewModel,
+                onBookingClick = ::openAddBookingModal,
+                contentPadding = paddingValues
+            )
         }
     }
 
@@ -60,7 +70,8 @@ fun BookingScreen() {
         AddBookingDialog(
             booking = selectedBooking,
             onDismiss = ::closeAddBookingModal,
-            onSubmit = ::createBooking
+            onCreate = ::createBooking,
+            onUpdate = ::updateBooking
         )
     }
 }

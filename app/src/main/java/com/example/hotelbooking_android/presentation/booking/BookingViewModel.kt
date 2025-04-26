@@ -3,13 +3,12 @@ package com.example.hotelbooking_android.presentation.booking
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.viewModelScope
 import com.example.hotelbooking_android.domain.model.Booking
 import com.example.hotelbooking_android.domain.model.BookingForm
 import com.example.hotelbooking_android.domain.repository.BookingRepository
 import com.example.hotelbooking_android.presentation.common.BaseViewModel
 import com.example.hotelbooking_android.presentation.common.ResourceState
-import kotlinx.coroutines.launch
+import java.util.UUID
 
 
 class BookingViewModel(
@@ -36,10 +35,15 @@ class BookingViewModel(
         )
     }
 
-    fun createBooking(bookingForm: BookingForm) {
-        viewModelScope.launch {
-            val newBooking = repository.createBooking(bookingForm)
-            updateBookings { bookings -> bookings + newBooking }
+    suspend fun createBooking(bookingForm: BookingForm) {
+        val newBooking = repository.createBooking(bookingForm)
+        updateBookings { bookings -> bookings + newBooking }
+    }
+
+    suspend fun updateBooking(id: UUID, bookingForm: BookingForm) {
+        val updatedBooking = repository.updateBooking(id, bookingForm)
+        updateBookings { bookings ->
+            bookings.map { if (it.id == id) updatedBooking else it }
         }
     }
 

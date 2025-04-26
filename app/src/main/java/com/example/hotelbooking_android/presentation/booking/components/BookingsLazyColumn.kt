@@ -14,6 +14,7 @@ import com.example.hotelbooking_android.presentation.common.components.entityCar
 @Composable
 fun BookingsLazyColumn(
     bookings: List<Booking>,
+    onBookingClick: ((Booking) -> Unit)? = null,
     contentPadding: PaddingValues = PaddingValues(16.dp),
 ) {
     LazyColumn(
@@ -24,7 +25,8 @@ fun BookingsLazyColumn(
 
         items(bookings) { booking ->
             BookingCard(
-                booking = booking
+                booking = booking,
+                onClick = onBookingClick
             )
         }
     }
